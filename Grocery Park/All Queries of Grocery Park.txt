@@ -1,0 +1,77 @@
+
+/* Search a name from a table*/
+
+SELECT name, id, nid, address, contact_no 
+FROM customers 
+WHERE name LIKE '%Shakib%';
+
+/* Find minimum, average & maximum salary from employee table */
+
+SELECT MAX(salary)AS Maximum, AVG(salary) AS Average, MIN(salary) AS Minimum FROM employees;
+
+/* Find the 2nd maximum salary from employees */
+
+SELECT MAX(salary)AS 2nd_max_salary 
+FROM employees 
+WHERE salary < (SELECT MAX(salary) FROM employees);
+
+/* Find the 3rd or nth maximum salary from employees */
+
+SELECT name, salary, id, nid, designation 
+FROM employees ORDER BY salary DESC LIMIT 3,1;
+
+/* Display the total sale */
+
+SELECT SUM(total_amount) AS total_sell 
+FROM receipt;
+
+/*Find products of required quantity and their total amount of money */
+
+SELECT product_name,COUNT(quantity) AS product_,SUM(total_amount) 
+from receipt 
+GROUP BY product_name;
+
+/* Display product has been ordered from which supplier */
+
+SELECT order_id, suplier_id, delivery_date
+FROM order_list
+INNER JOIN supplier
+ON order_list.suplier_id = supplier.id;
+
+
+/*Using UNION ALL Syntax*/
+
+SELECT product_id, order_id, order_date FROM order_list
+UNION ALL
+SELECT id, name, companyName FROM products;
+
+/* Using OR syntax*/
+
+SELECT name, nid, id AS C_id , address, contact_no
+FROM customers
+WHERE name = 'Raju' OR id = 116 OR address = 'Matuail';
+
+/* Using Order by keyword */
+
+SELECT * 
+FROM employees
+ORDER BY salary ASC ;
+
+
+/*Display the employee name who have salary greater than or equal 7500*/ 
+
+
+SELECT * 
+   FROM employees
+   WHERE id IN (SELECT ID 
+         FROM employees 
+         WHERE SALARY >= 7500) ; 
+         
+
+/* Display all information who is Sales Executive*/
+
+SELECT name, nid, salary, contact_no
+FROM employees
+WHERE designation IN
+(SELECT designation from employees WHERE designation = 'Sales Executive') LIMIT 5
+
